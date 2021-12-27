@@ -1,0 +1,394 @@
+<html lang="vi">
+
+<head>
+    <title>NPE VISION (Beta)</title>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link href="assets/fa/css/all.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/cssprogress.css">
+    <meta property="og:title" content="NPE Vision (Beta)" />
+    <meta property="og:description" content="Nhận diện laptop và hướng dẫn nâng cấp bằng mô hình Machine-learning." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="vi_VN" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
+
+    <!-- Load index.js after the content of the page -->
+    <script src="index.js"></script>
+</head>
+
+<body>
+    <div class="flex-wrapper">
+        <!-- Header -->
+        <header id="header">
+            <div class="inner">
+                <a href="../index.html" class="logo"><img src="images/logobeta.png" style="width:8.4em;"></a>
+                <nav id="nav">
+                    <a href="../index.html">Trang chủ</a>
+                    <a href="../classes/classes.html">Phân hệ</a>
+                    <a href="../progress/progress.html">Kiểm tra</a>
+                    <a href="../vision/index.html">NPE VISION</a>
+                </nav>
+            </div>
+        </header>
+        <a href="#menu" class="navPanelToggle"><i class="fas fa-bars"></i></a>
+
+        <!-- Main -->
+        <section id="one">
+            <div class="inner">
+                <header>
+                    <h2>NPE VISION - NHẬN DIỆN LAPTOP</h2>
+                </header>
+                <hr>
+                <center>
+                    <div id="chonhinh" style="display: none">
+                        <input type="file" name="file" id="image-selector" class="inputfile" accept=".png, .jpg, .jpeg" onchange="PreviewImage();" />
+                        <label for="image-selector"><span>Chọn hình Laptop</span></label>
+                    </div>
+                    <button id="predict-button" class="button" style="display: none" onclick="getPred()">Nhận diện</button>
+
+                </center>
+                <div class="cssProgress" id="progressbar">
+                    <br>
+                    <div class="progress2">
+                        <div class="cssProgress-bar cssProgress-danger cssProgress-active" data-percent="100" style="width: 100%;">
+                            <span class="cssProgress-label">Vui lòng chờ</span>
+                        </div>
+                    </div>
+                </div>
+                <center>
+                    <div id="errori" style="display:none;"></div>
+                </center>
+            </div>
+
+        </section>
+        <!-- Two -->
+        <section id="one">
+            <div class="inner">
+                <center>
+                    <div id="hinhanh" style="display: none">
+                        <center>
+                            <img id="selected-image" />
+                        </center>
+                    </div>
+                </center>
+                <span class=thin></span>
+                <div id="thongtin" style="display: none">
+                    <hr>
+                    <center>
+                        <div class="item">
+                            <h3 id="prediction-list"></h3>
+                        </div>
+                    </center>
+                </div>
+            </div>
+        </section>
+        <br><br>
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="inner">
+                <div class="content">
+                    <section>
+                        <center>
+                            <a href="../index.html" class="logo"><img src="images/logo.png" style="width:18rem;"></a>
+                        </center>
+                    </section>
+                    <section>
+                        <br>
+                        <h4>Thông tin thêm</h4>
+                        <ul class="alt">
+                            <li><a href="../guide/progressguide.html">Hướng dẫn kiểm tra tình trạng</a></li>
+                            <li><a href="#">Chính sách của N Performance</a></li>
+                            <li><a href="../story/story.html">Câu chuyện của tụi mình</a></li>
+                            <li>
+                                <a href="#"></a>
+                            </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <br>
+                        <h4>Liên hệ</h4>
+                        <ul class="alt">
+                            <li><i class="fas fa-phone">&nbsp;</i><a href="tel:+84768494629"> +84 768 494 629</a></li>
+                            <li><i class="fas fa-envelope"></i><a href="mailto:npethuduc@gmail.com">
+                                &nbsp;npethuduc@gmail.com</a></li>
+                            <li><i class="fab fa-facebook"></i><a href="https://www.facebook.com/npethuduc" target="_blank">&nbsp; Fanpage</a>&nbsp&nbsp///&nbsp&nbsp
+                                <i class="fab fa-youtube"></i><a href="https://www.youtube.com/channel/UCRCI7gr21E5UNe_eBhrNoEQ" target="_blank">&nbsp; Youtube</a></li>
+                            <li><i class=""></i>
+                        </ul>
+                    </section>
+                </div>
+                <div class="copyright">
+                    &copy; 2021 NPE Thu Duc
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+<style>
+    .item {
+        border-radius: 15px;
+        background-color: #0f0d2d;
+        background-repeat: no-repeat;
+        padding: 2em 0em 0.25em 0em;
+        color: white;
+        width: 100%;
+        transition: transform .2s;
+    }
+    
+    .item:hover {
+        -ms-transform: scale(1.03);
+        /* IE 9 */
+        -webkit-transform: scale(1.03);
+        /* Safari 3-8 */
+        transform: scale(1.03);
+        transition: transform .2s;
+    }
+    
+    #selected-image {
+        border: 5px solid #0f0d2d;
+        ;
+        border-radius: 10px;
+        width: 30vw;
+    }
+    
+    @media screen and (max-width: 480px) {
+        #selected-image {
+            width: 70vw;
+        }
+    }
+    
+    @media screen and (max-width: 980px) {
+        #selected-image {
+            width: 70vw;
+        }
+    }
+    
+    @media screen and (max-width: 736px) {
+        #selected-image {
+            width: 70vw;
+        }
+    }
+    
+    body {
+        background: #fffdf0;
+    }
+    
+    .thin {
+        display: inline-block;
+        height: 1em;
+    }
+    
+    .flex-wrapper {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .vl {
+        border-left: 1px solid #e5474b;
+        height: 100vh;
+    }
+    
+    .inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 80%;
+    }
+    
+    .inputfile+label {
+        border-radius: 0;
+        border: 0;
+        cursor: pointer;
+        display: inline-block;
+        font-size: .8em;
+        font-weight: 700;
+        height: 3.5em;
+        line-height: 3.65em;
+        padding: 0 2.25em;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        white-space: nowrap;
+        border-radius: 10px;
+        background-color: #f9dadb;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 80%;
+    }
+    
+    .inputfile:focus+label,
+    .inputfile+label:hover {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        background-color: #0f0d2d;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 80%;
+    }
+    
+    .inputfile+label {
+        cursor: pointer;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 80%;
+    }
+    
+    .sl-nav {
+        display: inline;
+    }
+    
+    .sl-nav ul {
+        margin: 0 0 0 -0.45em;
+        padding: 0;
+        list-style: none;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .sl-nav li {
+        cursor: pointer;
+    }
+    
+    .sl-nav li ul {
+        left: -60px;
+        display: block;
+        position: absolute;
+        background: #fff;
+        width: 150px;
+        padding: 0;
+        z-index: 1;
+        border-radius: 5px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all .2s ease-in-out;
+    }
+    
+    .sl-nav li:hover ul {
+        left: -60px;
+        display: block;
+        position: absolute;
+        background: #fff;
+        width: 150px;
+        padding: 0;
+        z-index: 1;
+        border-radius: 5px;
+        opacity: 1;
+        visibility: visible;
+        transition: all .2s ease-in-out;
+    }
+    
+    .sl-nav li ul li {
+        position: relative;
+        text-align: center;
+        background: transparent;
+        padding: 0;
+        z-index: 2;
+        font-size: 15px;
+        color: #0f0d2d;
+    }
+    
+    .sl-nav li ul li span:hover,
+    .sl-nav li ul li span.active {
+        color: #e5474b;
+    }
+    
+    @media screen and (max-width: 980px) {
+        .sl-nav li:hover ul {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            left: 15px;
+        }
+        .sl-nav li ul li {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+        .sl-nav li ul li:last-of-type {
+            padding-top: 15px;
+        }
+    }
+    
+    @media screen and (max-width: 736px) {
+        .sl-nav li:hover ul {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            left: 15px;
+        }
+        .sl-nav li ul li {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+        .sl-nav li ul li:last-of-type {
+            padding-top: 15px;
+        }
+    }
+</style>
+
+<script>
+    ;
+    (function(document, window, index) {
+        var inputs = document.querySelectorAll('.inputfile');
+        Array.prototype.forEach.call(inputs, function(input) {
+            var label = input.nextElementSibling,
+                labelVal = label.innerHTML;
+
+            input.addEventListener('change', function(e) {
+                var fileName = '';
+                if (this.files && this.files.length > 1)
+                    fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+                else
+                    fileName = e.target.value.split('\\').pop();
+
+                if (fileName)
+                    label.querySelector('span').innerHTML = fileName;
+                else
+                    label.innerHTML = labelVal;
+            });
+
+            // Firefox bug fix
+            input.addEventListener('focus', function() {
+                input.classList.add('has-focus');
+            });
+            input.addEventListener('blur', function() {
+                input.classList.remove('has-focus');
+            });
+        });
+    }(document, window, 0));
+</script>
+
+</html>
