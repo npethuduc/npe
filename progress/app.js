@@ -36,11 +36,11 @@ function renderList2(doc) {
 
     //Show profile pic
     if (det2.innerHTML == "NPE N Series") {
-        document.getElementById('nhh').src = 'images/pic01.webp';
+        document.getElementById('nhh').src = 'images/pic01.png';
     } else if (det2.innerHTML == "NPE Blue Flag") {
-        document.getElementById('nhh').src = 'images/pic02.webp';
+        document.getElementById('nhh').src = 'images/pic02.png';
     } else if (det2.innerHTML == "NPE DarkBlue Flag") {
-        document.getElementById('nhh').src = 'images/pic03.webp';
+        document.getElementById('nhh').src = 'images/pic03.png';
     }
 
     //Left badge
