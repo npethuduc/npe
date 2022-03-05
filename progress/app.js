@@ -42,6 +42,9 @@ function renderList2(doc) {
     } else if (det2.innerHTML == "NPE DarkBlue Flag") {
         document.getElementById('nhh').src = 'images/pic03.png';
     }
+    else {
+        document.getElementById('nhh').src = 'images/pic0.png';
+    }
 
     //Left badge
     let li2g = document.createElement('p');
