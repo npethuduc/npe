@@ -99,10 +99,11 @@ function renderList3(doc) {
 
 // Press Enter to go
 var numb = document.getElementById("numb");
-numb.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") { //checks whether the pressed key is "Enter"
-        myFunction();
-        alert('Enter');
+numb.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") { // Checks whether the pressed key is "Enter"
+        e.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("myBtn").click();
     }
 });
 
