@@ -41,8 +41,7 @@ function renderList2(doc) {
         document.getElementById('nhh').src = 'images/pic02.png';
     } else if (det2.innerHTML == "NPE DarkBlue Flag") {
         document.getElementById('nhh').src = 'images/pic03.png';
-    }
-    else {
+    } else {
         document.getElementById('nhh').src = 'images/pic0.png';
     }
 
@@ -97,6 +96,14 @@ function renderList3(doc) {
         }
     }
 }
+
+// Press Enter to go
+var numb = document.getElementById("numb");
+numb.addEventListener("keydown", function(e) {
+    if (e.code === "Enter") { //checks whether the pressed key is "Enter"
+        myFunction();
+    }
+});
 
 function myFunction() {
     //Reset list and box
