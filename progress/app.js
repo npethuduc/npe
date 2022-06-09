@@ -98,11 +98,16 @@ function renderList3(doc) {
 }
 
 // Press Enter to go
-var numb = document.getElementById("numb");
-numb.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") { //checks whether the pressed key is "Enter"
-        myFunction();
-    }
+$("form").on("submit", function(e) {
+    e.preventDefault();
+});
+
+$(function() {
+    $("input").on("keydown", function(e) {
+        if (e.keyCode === 13) {
+            myFunction()
+        }
+    });
 });
 
 function myFunction() {
