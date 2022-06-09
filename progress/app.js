@@ -100,7 +100,7 @@ function renderList3(doc) {
 // Press Enter to go
 var numb = document.getElementById("numb");
 numb.addEventListener("keydown", function(e) {
-    if (e.code === "Enter") { //checks whether the pressed key is "Enter"
+    if (e.code === "Enter" || e.code === 13) { //checks whether the pressed key is "Enter"
         myFunction();
     }
 });
